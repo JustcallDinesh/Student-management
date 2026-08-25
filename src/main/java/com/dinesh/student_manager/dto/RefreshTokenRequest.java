@@ -1,0 +1,24 @@
+package com.dinesh.student_manager.dto;
+
+import jakarta.validation.constraints.NotBlank;
+
+public class RefreshTokenRequest {
+
+    @NotBlank(message = "Refresh token cannot be empty")
+    private String refreshToken;
+
+    public RefreshTokenRequest() {
+    }
+
+    public RefreshTokenRequest(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken != null ? refreshToken.trim() : null;
+    }
+}

@@ -1,0 +1,317 @@
+@import "tailwindcss";
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+    --social-bg: rgba(47, 48, 58, 0.5);
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  width: 100%
+  ;
+  /* max-width: 100%;
+  margin: 0 auto; */
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}
+-------------------------------------------------------------------------------------------
+
+
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
+
+const Layout = ({ children }) => {
+  return (
+    <div className="min-h-screen bg-slate-950 text-white relative overflow-hidden">
+      {/* Background glow blobs */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-24 -left-20 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
+        <div className="absolute top-40 right-[-80px] h-80 w-80 rounded-full bg-fuchsia-500/20 blur-3xl" />
+        <div className="absolute bottom-[-100px] left-1/3 h-96 w-96 rounded-full bg-blue-500/20 blur-3xl" />
+      </div>
+
+      <div className="relative z-10 flex min-h-screen">
+        {/* Sidebar */}
+        <Sidebar />
+
+        {/* Right content area */}
+        <div className="flex flex-1 flex-col">
+          <Navbar />
+
+          <main className="flex-1 p-4 md:p-6 lg:p-8">
+            <div className=" w-full">
+              {children}
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Layout;
+
+
+
+
+import { FaBell } from "react-icons/fa";
+import { useAuth } from "../context/AuthContext";
+
+const Navbar = () => {
+
+  const { user, logout } = useAuth();
+
+  return (
+
+    <header className="sticky top-0 z-30 backdrop-blur-xl bg-white/10 border-b border-white/10">
+
+      <div className="flex items-center justify-between px-8 py-5">
+
+        <div>
+
+          <h1 className="text-3xl font-bold text-white">
+            Student Management
+          </h1>
+
+          <p className="text-sm text-slate-300 mt-1">
+            Manage Students, Courses & Enrollments
+          </p>
+
+        </div>
+
+        <div className="flex items-center gap-6">
+
+          <button
+            className="relative rounded-full bg-white/10 p-3 hover:bg-white/20 transition"
+          >
+            <FaBell className="text-white text-lg" />
+
+            <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500"></span>
+
+          </button>
+
+          <div className="text-right">
+
+            <p className="text-white font-semibold">
+              {user?.username || "Administrator"}
+            </p>
+
+            <p className="text-slate-300 text-sm">
+              System User
+            </p>
+
+          </div>
+
+          <button
+            onClick={logout}
+            className="rounded-xl bg-red-500 px-5 py-2.5 text-white font-medium hover:bg-red-600 transition shadow-lg"
+          >
+            Logout
+          </button>
+
+        </div>
+
+      </div>
+
+    </header>
+
+  );
+
+};
+
+export default Navbar;
+
+
+
+import {
+  FaBook,
+  FaClipboardList,
+  FaHouse,
+  FaUserGraduate,
+} from "react-icons/fa6";
+
+import { NavLink } from "react-router-dom";
+
+const navItem = ({ isActive }) =>
+
+  `flex items-center gap-4 rounded-2xl px-5 py-4 transition-all duration-300 font-medium ${
+    isActive
+      ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg scale-[1.03]"
+      : "text-slate-300 hover:bg-white/10 hover:text-white"
+  }`;
+
+const Sidebar = () => {
+
+  return (
+
+    <aside className="sticky top-0 h-screen w-72 backdrop-blur-xl bg-white/10 border-r border-white/10 p-6">
+
+      <div className="mb-10">
+
+        <div className="h-16 w-16 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-3xl font-bold shadow-xl">
+
+          S
+
+        </div>
+
+        <h2 className="mt-5 text-2xl font-bold text-white">
+
+          SMS Panel
+
+        </h2>
+
+        <p className="text-slate-300 text-sm">
+
+          Admin Dashboard
+
+        </p>
+
+      </div>
+
+      <nav className="space-y-3">
+
+        <NavLink to="/dashboard" className={navItem}>
+          <FaHouse />
+          Dashboard
+        </NavLink>
+
+        <NavLink to="/students" className={navItem}>
+          <FaUserGraduate />
+          Students
+        </NavLink>
+
+        <NavLink to="/courses" className={navItem}>
+          <FaBook />
+          Courses
+        </NavLink>
+
+        <NavLink to="/enrollments" className={navItem}>
+          <FaClipboardList />
+          Enrollments
+        </NavLink>
+
+      </nav>
+
+      <div className="absolute bottom-8 left-6 right-6 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 p-5 shadow-xl">
+
+        <h3 className="text-white font-semibold">
+
+          Student Management
+
+        </h3>
+
+        <p className="text-blue-100 text-sm mt-2">
+
+          Java Spring Boot + React + JWT + PostgreSQL
+
+        </p>
+
+      </div>
+
+    </aside>
+
+  );
+
+};
+
+export default Sidebar;
+
+
+
