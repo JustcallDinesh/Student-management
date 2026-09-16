@@ -9,7 +9,7 @@ import com.dinesh.student_manager.Entity.Student;
 import com.dinesh.student_manager.Repository.CourseRepository;
 import com.dinesh.student_manager.Repository.EnrollmentRepository;
 import com.dinesh.student_manager.Repository.StudentRepository;
-import com.dinesh.student_manager.dto.StudentDashboardResponse;
+//import com.dinesh.student_manager.dto.StudentDashboardResponse;
 
 @Service
 public class StudentDashboardService {
