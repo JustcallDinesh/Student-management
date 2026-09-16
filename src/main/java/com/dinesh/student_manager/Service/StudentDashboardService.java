@@ -14,37 +14,29 @@ import com.dinesh.student_manager.dto.StudentDashboardResponse;
 @Service
 public class StudentDashboardService {
 
-    private final StudentRepository studentRepository;
-    private final EnrollmentRepository enrollmentRepository;
-    private final CourseRepository courseRepository;
+	private final StudentRepository studentRepository;
+	private final EnrollmentRepository enrollmentRepository;
+	private final CourseRepository courseRepository;
 
-    public StudentDashboardService(
-            StudentRepository studentRepository,
-            EnrollmentRepository enrollmentRepository,
-            CourseRepository courseRepository) {
+	public StudentDashboardService(StudentRepository studentRepository, EnrollmentRepository enrollmentRepository,
+			CourseRepository courseRepository) {
 
-        this.studentRepository = studentRepository;
-        this.enrollmentRepository = enrollmentRepository;
-        this.courseRepository = courseRepository;
-    }
+		this.studentRepository = studentRepository;
+		this.enrollmentRepository = enrollmentRepository;
+		this.courseRepository = courseRepository;
+	}
 
-    public StudentDashboardResponse getDashboard(
-            String username) {
+	public StudentDashboardService getDashboard(String username) {
 
-        Student student =
-                studentRepository
-                        .findByUserUsername(username)
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Student profile not found"));
+		Student student = studentRepository.findByUserUsername(username)
+				.orElseThrow(() -> new RuntimeException("Student profile not found"));
 
-        // get student's enrollments
-        List<Enrollment> enrollments =
-                enrollmentRepository
-                        .findByStudentId(student.getId());
+		// get student's enrollments
+		List<Enrollment> enrollments = enrollmentRepository.findByStudentId(student.getId());
+		return null;
 
-        // build dashboard response
+		// build dashboard response
 
-        // return response
-    }
+		// return response
+	}
 }
